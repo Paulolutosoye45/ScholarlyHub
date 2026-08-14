@@ -25,7 +25,7 @@ export default function LeftPanel({ currentStep }: { currentStep: number }) {
           Get your school<br />Online in minutes
         </h1>
         <p className="text-white/70 text-sm leading-relaxed mb-10">
-          Bleutthub makes it easy to manage teachers,<br />
+          bluetthub makes it easy to manage teachers,<br />
           students, and school operations — all in one place.
         </p>
 
@@ -62,7 +62,7 @@ export default function LeftPanel({ currentStep }: { currentStep: number }) {
 
       {/* Footer */}
       <div className="z-10">
-        <p className="text-white/40 text-xs">© 2025 Bleutthub. All rights reserved.</p>
+        <p className="text-white/40 text-xs">© 2025 bluetthub. All rights reserved.</p>
         <p className="text-white/30 text-xs mt-1">
           By registering you agree to our{" "}
           <span className="underline cursor-pointer">Terms of Service</span> and{" "}

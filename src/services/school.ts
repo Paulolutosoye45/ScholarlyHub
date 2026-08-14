@@ -1,7 +1,7 @@
 import { API } from ".";
 import { X_Tenant_ID } from "./tenant";
 
-export interface Iprovison {
+export interface IRegister {
   schoolName: string;
   location: string;
   countryId: number;
@@ -12,6 +12,7 @@ export interface Iprovison {
   tenantIdentifier: string;
   schoolCode: string;
   logoUrl: string;
+  logoPublicId: string;
   adminFirstName: string;
   adminMiddleName: string;
   adminLastName: string;
@@ -21,26 +22,50 @@ export interface Iprovison {
 }
 
 export type TResponse<T> = {
-  responseMessage: string,
-  responseCode: string,
-  status: string,
-  data: T
-}
+  responseMessage: string;
+  responseCode: string;
+  status: string;
+  data: T;
+};
 
 export const endpoints = {
-  Provison: "/api/School/provision",
+  register: "/api/School/register",
   updateSchoolLogo: "/api/School/logo",
+  registrationStatus: "/api/School/registration-requests",
+  registrationRequests: "/api/School/registration-requests?status=pending",
+  approve: (requestId: string) => `/api/School/approve/${requestId}`,
+  reject: (requestId: string) => `/api/School/reject/${requestId}`,
 };
 
 export const schoolService = {
-  Provision: (data: Iprovison) => {
-    return API.post<TResponse<unknown>>(endpoints.Provison, data, {
+  Regsiter: (data: IRegister) => {
+    return API.post<TResponse<unknown>>(endpoints.register, data, {
       headers: {
         "X-Tenant-ID": X_Tenant_ID,
       },
     });
   },
-  
+
+  RegistrationStatus: () => {
+    return API.get<TResponse<unknown>>(endpoints.registrationRequests, {
+      headers: {
+        "X-Tenant-ID": X_Tenant_ID,
+      },
+    });
+  },
+
+  schoolRegistrationRequests: () => {
+    return API.get<TResponse<unknown>>(endpoints.registrationStatus);
+  },
+
+  approveSchool: (requestId: string) => {
+    return API.post<TResponse<unknown>>(endpoints.approve(requestId));
+  },
+
+  rejectSchool: (requestId: string, message: string) => {
+    return API.post<TResponse<unknown>>(endpoints.reject(requestId),message);
+  },
+
   updateSchoolLogo: (logo: File) => {
     const formData = new FormData();
     formData.append("logo", logo);

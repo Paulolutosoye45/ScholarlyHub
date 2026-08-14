@@ -124,7 +124,7 @@ const StepOne = ({
             <div>
                 <h2 className="text-xl font-bold text-gray-800 font-space-grotesk">Tell us about your school</h2>
                 <p className="text-xs text-[#3A3A3A] mt-1 font-space-grotesk">
-                    This information will appear on your school's Bleutthub profile and help us set up your account correctly
+                    This information will appear on your school's bluetthub profile and help us set up your account correctly
                 </p>
             </div>
 

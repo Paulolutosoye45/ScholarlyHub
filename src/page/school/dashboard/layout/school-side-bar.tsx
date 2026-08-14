@@ -10,8 +10,8 @@ import {
   PlusCircle,
   Settings,
   Shield,
-  ShieldCheck,
   Ticket,
+  TrendingUp,
   Users,
 } from "lucide-react";
 
@@ -30,30 +30,30 @@ export interface NavItem {
   disabled?: boolean;
 }
 
-const approval = false; // ← flip to true when approved
+const approval = true; // ← flip to true when approved
 
 const OVERVIEW: NavItem[] = [
-  { name: "Dashboard",  icons: <LayoutDashboard size={15} />, path: "/",         disabled: !approval },
-  { name: "Analytics",  icons: <BarChart2 size={15} />,       path: "/analytics", disabled: true      },
-  { name: "Status",     icons: <ShieldCheck size={15} />,       path: "/approval",  disabled: false     },
+  { name: "Dashboard",  icons: <LayoutDashboard size={15} />, path: "/dashboard",         disabled: !approval },
+  { name: "Analytics",  icons: <TrendingUp size={15} />,       path: "/analytics", disabled: false      },
+  // { name: "Status",     icons: <ShieldCheck size={15} />,       path: "/approval",  disabled: false     },
 ];
 
 const SCHOOLS: NavItem[] = [
   { name: "All Schools",      icons: <Building2 size={15} />,  path: "/schools",        disabled: !approval },
   { name: "Register School",  icons: <PlusCircle size={15} />, path: "/register-school", disabled: !approval },
-  { name: "Administrators",   icons: <Users size={15} />,      path: "/administrators",  disabled: !approval },
+  { name: "Approvals",   icons: <Users size={15} />,      path: "/school-approval",  disabled: !approval },
 ];
 
 const BILLING: NavItem[] = [
-  { name: "Subscriptions", icons: <CreditCard size={15} />, path: "/subscriptions",  disabled: true },
-  { name: "Revenue",       icons: <BarChart2 size={15} />,  path: "/revenue",        disabled: true },
-  { name: "Invoices",      icons: <FileText size={15} />,   path: "/invoices",       disabled: true },
+  { name: "Subscriptions", icons: <CreditCard size={15} />, path: "/subscriptions",  disabled: false },
+  { name: "Revenue",       icons: <BarChart2 size={15} />,  path: "/revenue",        disabled: false },
+  { name: "Invoices",      icons: <FileText size={15} />,   path: "/invoices",       disabled: false },
 ];
 
 const PLATFORM: NavItem[] = [
-  { name: "Compliance",      icons: <Shield size={15} />,   path: "/compliance",      disabled: true },
-  { name: "Settings",        icons: <Settings size={15} />, path: "/settings",        disabled: true },
-  { name: "Support Tickets", icons: <Ticket size={15} />,   path: "/support-tickets", disabled: true },
+  { name: "Compliance",      icons: <Shield size={15} />,   path: "/compliance",      disabled: false },
+  { name: "Settings",        icons: <Settings size={15} />, path: "/settings",        disabled: false },
+  { name: "Support Tickets", icons: <Ticket size={15} />,   path: "/support-tickets", disabled: false },
 ];  
 
 const SECTIONS: { heading: string; items: NavItem[] }[] = [

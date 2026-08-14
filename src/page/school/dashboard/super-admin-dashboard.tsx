@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import AwaitingApproval from "../AwaitingApproval";
 import CompleteSchoolProfile from "../component/complete-school-profile";
 import { SchoolSidebar } from "./layout/school-side-bar";
@@ -12,8 +13,9 @@ import { SchoolSubscriptionMix } from "./sections/school-subscription-mix";
 
 
 export default function SuperAdminDashboard() {
-  const approval = false; // ← flip to true when approved
-  const profileComplete = false;
+  const approval = true; // ← flip to true when approved
+  const profileComplete = true;
+  const navigate = useNavigate()
   return (
     <div className="flex h-screen bg-[#EEEDF9] font-Poppins">
       <SchoolSidebar />
@@ -27,7 +29,7 @@ export default function SuperAdminDashboard() {
             profileComplete ? (
               // ── Approved — full dashboard ──────────────────────
               <div className="space-y-4 lg:space-y-5">
-                <SchoolHeroBanner />
+                <SchoolHeroBanner onRegisterSchool={() => navigate('/register-school')} />
                 <SchoolStatsCards />
                 <SchoolQuickActions />
                 <div className="flex flex-col xl:flex-row gap-4 lg:gap-5 items-start">

@@ -1,4 +1,4 @@
-import { Bell, Menu, Search, X } from "lucide-react";
+import { Bell, Menu, Search, } from "lucide-react";
 import { useState } from "react";
 
 export function SchoolTopBar({ title = "Dashboard" }: { title?: string }) {
@@ -18,7 +18,7 @@ export function SchoolTopBar({ title = "Dashboard" }: { title?: string }) {
     <header className="font-space-grotesk h-[62px] bg-[#F8F8FD] border-b border-[#29238229] flex items-center justify-between px-4 lg:px-6 flex-shrink-0">
       <div className="flex items-center gap-3">
         <button onClick={toggleSidebar} className="lg:hidden w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
-          {sidebarOpen ? <X size={16} /> : <Menu size={16} />}
+          <Menu size={16} />
         </button>
         <h1 className="text-sm lg:text-base font-bold font-space-grotesk text-[#292382]">{title}</h1>
       </div>

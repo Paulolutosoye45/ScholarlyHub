@@ -3,12 +3,14 @@ import SuperAdminDashboard from "../page/school/dashboard/super-admin-dashboard"
 import Onboarding from "../page/school/onboarding"
 import ApprovalPage from "../page/school/approval"
 import NotFound from "@/components/NotFound"
+import ApprovalsPage from "@/approvals/approvals-page"
+import { LoginForm } from "@/platform-admin/LoginForm"
 // import AwaitingApproval from "@/page/school/AwaitingApproval"
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to="/register-school" replace />,
+        element: <Navigate to="/login" replace />,
     },
     {
         path: "/register-school",
@@ -19,8 +21,16 @@ const router = createBrowserRouter([
         element: <SuperAdminDashboard />,
     },
     {
+        path: "/school-approval",
+        element: <ApprovalsPage />,
+    },
+    {
         path: "/approval",
         element: <ApprovalPage />,
+    },
+    {
+        path: "/platform-login",
+        element: <LoginForm />,
     },
 
     {

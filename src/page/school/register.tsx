@@ -8,9 +8,10 @@ import { schoolService } from "../../services/school";
 import type { Step1Form, Step2Form } from "@/types/registration";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { Hashing } from "@/utils";
 
 const STEP_LABELS = ["School Information", "Admin Credentials", "Review & Submit"];
-const STEP_PCT = [0, 37, 80];
+const STEP_PCT = [0, 37, 100];
 
 function StepProgress({ step }: { step: number }) {
   return (
@@ -51,15 +52,15 @@ export default function RegisterSchoolPage() {
     setStep2(data);
     setStep(3);
   };
-
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
+    const hashedPassword = await Hashing(step2.secretPhrase);
     setSubmitting(true);
     try {
       const payload = {
-        logoUrl: "",
+        logoUrl: crypto.randomUUID(),
         schoolName: step1.schoolName,
         location: `${step1.city}, ${step1.state}, ${step1.country}`,
         countryId: 0,
@@ -67,30 +68,29 @@ export default function RegisterSchoolPage() {
         state: step1.state,
         address: step1.schoolAddress,
         hasBranch: step1.branch === "Yes",
-        tenantIdentifier: "green",
+        tenantIdentifier: step1.schoolCode ,
         schoolCode: step1.schoolCode,
         adminFirstName: step2.firstName,
         adminMiddleName: "",
         adminLastName: step2.lastName,
         adminEmail: step2.email,
         adminUsername: step2.username,
-        adminPassword: step2.secretPhrase,
+        adminPassword: hashedPassword,
+        logoPublicId:crypto.randomUUID(),
       };
-      const res = await schoolService.Provision(payload);
+      const res = await schoolService.Regsiter(payload);
+      console.log('res', res.data.data)
 
       if (!res.data.status) {
         toast.error(res.data.responseMessage || "Something went wrong");
         return;
       }
-
       toast.success(res.data.responseMessage || "School registered successfully!");
-
       // reset
       setStep(1);
       setStep1({ schoolName: "", schoolLogo: null, schoolAddress: "", country: "", state: "", city: "", branch: "", schoolCode: "" });
       setStep2({ firstName: "", lastName: "", email: "", phone: "", roleDescription: "", username: "", secretPhrase: "", });
-
-      // navigate("/approval");
+      navigate("/approval", { state: res.data.data });
 
     } catch (error) {
       const msg =
