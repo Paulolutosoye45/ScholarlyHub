@@ -71,11 +71,6 @@ export const step2Schema = yup.object().shape({
       /^[a-zA-Z0-9._-]+$/,
       "Username can only contain letters, numbers, dots, hyphens and underscores"
     ),
-  secretPhrase: yup
-    .string()
-    .trim()
-    .required("Secret phrase is required")
-    .min(4, "Secret phrase must be at least 4 characters"),
 });
 
 export type Step1FormData = yup.InferType<typeof step1Schema>;

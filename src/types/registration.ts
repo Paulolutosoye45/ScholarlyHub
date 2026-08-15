@@ -16,5 +16,4 @@ export interface Step2Form {
   phone: string;
   roleDescription: string;
   username: string;
-  secretPhrase: string;
 }

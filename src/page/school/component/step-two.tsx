@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CircleChevronLeft, KeyRound, User } from "lucide-react";
+import { CircleChevronLeft, User } from "lucide-react";
 import { Field } from "./field";
 import { Input } from "./input";
 import { step2Schema, type Step2FormData } from "./schemas";
@@ -32,7 +32,6 @@ const StepTwo = ({
       phone: form.phone,
       roleDescription: form.roleDescription,
       username: form.username,
-      secretPhrase: form.secretPhrase,
     },
     mode: "onChange",
   });
@@ -57,7 +56,6 @@ const StepTwo = ({
       phone: data.phone ?? "",
       roleDescription: data.roleDescription ?? "",
       username: generatedUsername,
-      secretPhrase: data.secretPhrase,
     });
   };
 
@@ -154,17 +152,6 @@ const StepTwo = ({
       <div className="h-px bg-gray-100" />
 
       {/* Secret phrase */}
-      <div className="flex flex-col gap-3">
-        <Field label="Tempomary Password" required error={errors.secretPhrase?.message}>
-          <Input
-            placeholder={"i love password"}
-            icon={<KeyRound size={13} />}
-            value={watch("secretPhrase") ?? ""}
-            onChange={(v) => setValue("secretPhrase", v, { shouldValidate: true })}
-            error={!!errors.secretPhrase}
-          />
-        </Field>
-      </div>
 
       <div className="flex gap-3">
         <button

@@ -18,7 +18,6 @@ export interface IRegister {
   adminLastName: string;
   adminEmail: string;
   adminUsername: string;
-  adminPassword: string;
 }
 
 export type TResponse<T> = {
@@ -63,8 +62,15 @@ export const schoolService = {
   },
 
   rejectSchool: (requestId: string, message: string) => {
-    return API.post<TResponse<unknown>>(endpoints.reject(requestId),message);
-  },
+  return API.post<TResponse<unknown>>(endpoints.reject(requestId), 
+    JSON.stringify(message),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+},
 
   updateSchoolLogo: (logo: File) => {
     const formData = new FormData();

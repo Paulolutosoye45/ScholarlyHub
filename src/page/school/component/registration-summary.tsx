@@ -16,7 +16,6 @@ const RegistrationSummary = ({ step1, step2 }: { step1: Step1Form; step2: Step2F
     { label: "Names",        value: [step2.firstName, step2.lastName].filter(Boolean).join(" ") },
     { label: "Username",     value: step2.username },
     { label: "Phone",        value: step2.phone ? `+234 ${step2.phone}` : "" },
-    { label: "Secret Phrase",value: step2.secretPhrase ? "••••••" : "" },
     { label: "Admin Email",  value: step2.email },
   ];
 

@@ -2,11 +2,9 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { platformAdmins } from "@/services/platform"
 import { Eye, EyeOff, Loader2, AlertCircle, AtSign, Lock, ShieldCheck } from "lucide-react"
-
-interface LoginFormProps {
-  onSuccess?: () => void
-  onError?: (error: string) => void
-}
+import { Hashing } from "@/utils"
+import { token, localData } from "@/utils"
+import { useNavigate } from "react-router-dom"
 
 function InputField({
   label, required, error, icon, children,
@@ -36,10 +34,11 @@ function InputField({
   )
 }
 
-export function LoginForm({ onSuccess, onError }: LoginFormProps = {}) {
-  const [isLoading,    setIsLoading]    = React.useState(false)
+export function LoginForm({ onError }: { onError?: (error: string) => void } = {}) {
+  const [isLoading, setIsLoading] = React.useState(false)
   const [showPassword, setShowPassword] = React.useState(false)
-  const [errorMsg,     setErrorMsg]     = React.useState<string | null>(null)
+  const [errorMsg, setErrorMsg] = React.useState<string | null>(null)
+  const navigate = useNavigate()
 
   const { register, handleSubmit, formState: { errors } } = useForm<{ username: string; password: string }>({
     mode: "onBlur",
@@ -48,9 +47,16 @@ export function LoginForm({ onSuccess, onError }: LoginFormProps = {}) {
   const onSubmit = async (data: { username: string; password: string }) => {
     setIsLoading(true)
     setErrorMsg(null)
+    const hashedPassword = await Hashing(data.password)
     try {
-      await platformAdmins.Login(data)
-      onSuccess?.()
+      const res = await platformAdmins.Login({ ...data, password: hashedPassword })
+      if (res.data.status === "failed") return setErrorMsg(res.data.responseMessage)
+
+      const userData = res.data.data as { token: string; tokenExpiresIn: number; user: any }
+      token.login(userData.token, userData.tokenExpiresIn)
+      localData.save("user", userData.user)
+
+      navigate('/dashboard')
     } catch (err) {
       const msg =
         (err as any)?.response?.data?.message ||

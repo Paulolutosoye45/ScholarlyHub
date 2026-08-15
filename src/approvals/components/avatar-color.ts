@@ -10,3 +10,16 @@ export function getAvatarColor(str: string): string {
   }
   return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
 }
+
+export function formatDate(dateStr: string | null): string {
+  if (!dateStr) return '—';
+  try {
+    return new Date(dateStr).toLocaleString('en-NG', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: 'numeric', minute: '2-digit',
+    });
+  } catch {
+    return dateStr;
+  }
+}
+

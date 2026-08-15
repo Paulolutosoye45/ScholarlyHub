@@ -31,6 +31,7 @@ export const platformAdmins = {
   },
 
   Login: (data: ILogin) => {
+      
      return API.post<TResponse<unknown>>(endpoints.login, data, {
       headers: {
         "X-Tenant-ID": X_Tenant_ID,

@@ -5,6 +5,7 @@ import ApprovalPage from "../page/school/approval"
 import NotFound from "@/components/NotFound"
 import ApprovalsPage from "@/approvals/approvals-page"
 import { LoginForm } from "@/platform-admin/LoginForm"
+import { WithAuth } from "@/with-auth"
 // import AwaitingApproval from "@/page/school/AwaitingApproval"
 
 const router = createBrowserRouter([
@@ -18,11 +19,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <SuperAdminDashboard />,
+        element: <WithAuth><SuperAdminDashboard /></WithAuth>,
     },
     {
         path: "/school-approval",
-        element: <ApprovalsPage />,
+        element: <WithAuth><ApprovalsPage /></WithAuth>,
     },
     {
         path: "/approval",
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/platform-login",
-        element: <LoginForm />,
+        element: <WithoutAuth><LoginForm /></WithoutAuth>,
     },
 
     {

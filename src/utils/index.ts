@@ -4,6 +4,7 @@ const KEYS = {
   schoolInfo: "schoolInfo",
   user: "user",
   school: "school",
+  expiry: "tokenExpiry",
 } as const;
 
 export const token = {
@@ -13,13 +14,17 @@ export const token = {
   },
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    const expiry = localStorage.getItem(KEYS.expiry);
+    if (!token || !expiry) return false;
+    return Date.now() < parseInt(expiry, 10);
   },
 
   // ── Login ──────────────────────────────────────────────────────
-  login(accessToken: string, refreshToken: string) {
+  login(accessToken: string, expiresIn: number) {
     localStorage.setItem(KEYS.token, accessToken);
-    localStorage.setItem(KEYS.refresh, refreshToken);
+    const expiry = Date.now() + expiresIn * 1000;
+    localStorage.setItem(KEYS.expiry, expiry.toString());
   },
 
   // ── Refresh token ──────────────────────────────────────────────
@@ -34,7 +39,9 @@ export const token = {
 
   // ── Logout / clear ─────────────────────────────────────────────
   logout() {
-
+    localStorage.removeItem(KEYS.token);
+    localStorage.removeItem(KEYS.refresh);
+    localStorage.removeItem(KEYS.expiry);
   },
 
   clearAll() {

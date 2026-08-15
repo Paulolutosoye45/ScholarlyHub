@@ -82,7 +82,7 @@ export default function ApprovalsPage() {
 
         if (!isMounted) return;
 
-        if (!res.data.status) {
+        if (res.data.status === 'failed') {
           setErrMsg(res.data.responseMessage);
           return;
         }
@@ -132,7 +132,7 @@ export default function ApprovalsPage() {
     setApprovingSch(true)
     try {
       const res = await schoolService.approveSchool(id)
-      if (!res.data.status) return toast.error(res.data.responseMessage)
+      if (res.data.status === 'failed') return toast.error(res.data.responseMessage)
 
       setApplications(prev =>
         prev?.map(a =>
@@ -159,7 +159,7 @@ export default function ApprovalsPage() {
     setRejectSch(true)
     try {
       const res = await schoolService.rejectSchool(id, reason)
-      if (!res.data.status) return toast.error(res.data.responseMessage)
+      if (res.data.status === 'failed') return toast.error(res.data.responseMessage)
       setApplications(prev =>
         prev?.map(a =>
           a.id === id

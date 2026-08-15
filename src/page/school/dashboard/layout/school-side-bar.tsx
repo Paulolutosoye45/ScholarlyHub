@@ -1,5 +1,6 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { token } from "@/utils";
 import {
   BarChart2,
   Building2,
@@ -73,6 +74,7 @@ function closeSidebar() {
 
 export function SchoolSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     closeSidebar();
@@ -178,6 +180,17 @@ export function SchoolSidebar() {
             </div>
             <ChevronRight size={13} className="text-white/20 group-hover:text-white/50 transition-colors" />
           </div>
+        </div>
+        <div className="px-3 py-2 border-t border-white/5">
+          <button
+            onClick={() => {
+              token.logout();
+              navigate("/platform-login");
+            }}
+            className="flex items-center gap-2.5 px-3 py-2 rounded-lg w-full text-sm font-medium text-white/50 hover:bg-white/5 hover:text-white transition-colors"
+          >
+            Logout
+          </button>
         </div>
       </aside>
     </>

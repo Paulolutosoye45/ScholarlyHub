@@ -8,7 +8,6 @@ import { schoolService } from "../../services/school";
 import type { Step1Form, Step2Form } from "@/types/registration";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { Hashing } from "@/utils";
 
 const STEP_LABELS = ["School Information", "Admin Credentials", "Review & Submit"];
 const STEP_PCT = [0, 37, 100];
@@ -39,7 +38,7 @@ export default function RegisterSchoolPage() {
   });
   const [step2, setStep2] = useState<Step2Form>({
     firstName: "", lastName: "", email: "", phone: "",
-    roleDescription: "", username: "", secretPhrase: "",
+    roleDescription: "", username: "",
 
   });
 
@@ -56,7 +55,6 @@ export default function RegisterSchoolPage() {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
-    const hashedPassword = await Hashing(step2.secretPhrase);
     setSubmitting(true);
     try {
       const payload = {
@@ -75,13 +73,12 @@ export default function RegisterSchoolPage() {
         adminLastName: step2.lastName,
         adminEmail: step2.email,
         adminUsername: step2.username,
-        adminPassword: hashedPassword,
         logoPublicId:crypto.randomUUID(),
       };
       const res = await schoolService.Regsiter(payload);
       console.log('res', res.data.data)
 
-      if (!res.data.status) {
+      if (res.data.status === 'failed') {
         toast.error(res.data.responseMessage || "Something went wrong");
         return;
       }
@@ -89,7 +86,7 @@ export default function RegisterSchoolPage() {
       // reset
       setStep(1);
       setStep1({ schoolName: "", schoolLogo: null, schoolAddress: "", country: "", state: "", city: "", branch: "", schoolCode: "" });
-      setStep2({ firstName: "", lastName: "", email: "", phone: "", roleDescription: "", username: "", secretPhrase: "", });
+      setStep2({ firstName: "", lastName: "", email: "", phone: "", roleDescription: "", username: "", });
       navigate("/approval", { state: res.data.data });
 
     } catch (error) {

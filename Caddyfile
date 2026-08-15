@@ -1,0 +1,7 @@
+platform.bluetsch.com {
+    root * /usr/share/nginx/html
+    file_server
+    proxy /api/ https://techhubschmanagement.onrender.com {
+        proxy_header Host $host
+    }
+}

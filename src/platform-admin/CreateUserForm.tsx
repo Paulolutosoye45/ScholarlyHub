@@ -59,7 +59,8 @@ export function CreateUserForm({ onSuccess, onError }: CreateUserFormProps = {})
     setIsLoading(true)
     setMessage(null)
     try {
-      await platformAdmins.createUser(data)
+      const res =  await platformAdmins.createUser(data)
+      if(res.data.status === 'failed') return setMessage({text: res.data.responseMessage, ok:false})
       setMessage({ text: "User created successfully!", ok: true })
       onSuccess?.()
     } catch (err) {

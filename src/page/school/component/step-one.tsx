@@ -198,7 +198,7 @@ const StepOne = ({
 
                 <Field label="School Code" required error={errors.schoolCode?.message}>
                     <Input
-                        placeholder="eg BLUE-2024-001"
+                        placeholder="eg BLUE"
                         value={watch("schoolCode") ?? ""}
                         onChange={(v) => setValue("schoolCode", v, { shouldValidate: true })}
                         error={!!errors.schoolCode}
