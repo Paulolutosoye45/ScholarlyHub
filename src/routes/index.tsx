@@ -5,7 +5,7 @@ import ApprovalPage from "../page/school/approval"
 import NotFound from "@/components/NotFound"
 import ApprovalsPage from "@/approvals/approvals-page"
 import { LoginForm } from "@/platform-admin/LoginForm"
-import { WithAuth } from "@/with-auth"
+import { WithAuth, WithoutAuth } from "@/with-auth"
 // import AwaitingApproval from "@/page/school/AwaitingApproval"
 
 const router = createBrowserRouter([
