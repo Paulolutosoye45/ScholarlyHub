@@ -1,9 +1,10 @@
+version: '3.8'
+
 services:
-  scholarlyhub:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: scholarlyhub
+  app:
+    build: .
     ports:
-      - "3011:80"
+      - "80:80"
+    environment:
+      - NODE_ENV=production
     restart: unless-stopped
