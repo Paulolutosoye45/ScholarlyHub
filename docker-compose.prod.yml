@@ -1,8 +1,9 @@
 services:
-  web:
+  scholarlyhub:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: scholarlyhub
     ports:
       - "3011:80"
     restart: unless-stopped
