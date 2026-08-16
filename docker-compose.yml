@@ -1,8 +1,7 @@
-version: '3.8'
-
 services:
-  web:
+  myapp:
     build: .
+    container_name: myapp
     ports:
-      - "80:80"
+      - "8081:80"
     restart: unless-stopped

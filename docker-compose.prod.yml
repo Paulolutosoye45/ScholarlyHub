@@ -1,10 +1,15 @@
-version: '3.8'
-
 services:
-  app:
-    build: .
+  myapp:
     ports:
-      - "80:80"
+      - "127.0.0.1:8081:80"   # only reachable via localhost — host proxy handles public traffic
     environment:
       - NODE_ENV=production
-    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
