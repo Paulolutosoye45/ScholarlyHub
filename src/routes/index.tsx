@@ -11,7 +11,7 @@ import { WithAuth, WithoutAuth } from "@/with-auth"
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to="/login" replace />,
+        element: <Navigate to="/platform-login" replace />,
     },
     {
         path: "/register-school",
