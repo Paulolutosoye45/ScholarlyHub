@@ -1,7 +1,9 @@
 services:
-  myapp:
-    build: .
-    container_name: myapp
-    ports:
-      - "8081:80"
+  scholarlyhub:
+    image: nginx:alpine
+    container_name: scholarlyhub
     restart: unless-stopped
+    ports:
+      - "3011:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
