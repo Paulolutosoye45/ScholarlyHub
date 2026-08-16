@@ -31,7 +31,7 @@ export const endpoints = {
   register: "/api/School/register",
   updateSchoolLogo: "/api/School/logo",
   registrationStatus: "/api/School/registration-requests",
-  registrationRequests: "/api/School/registration-requests?status=pending",
+  registrationRequests: "/api/School/registration-requests",
   approve: (requestId: string) => `/api/School/approve/${requestId}`,
   reject: (requestId: string) => `/api/School/reject/${requestId}`,
 };
