@@ -1,9 +1,9 @@
 services:
   scholarlyhub:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: scholarlyhub
     restart: unless-stopped
     ports:
       - "3011:80"
-    volumes:
-      - ./dist:/usr/share/nginx/html:ro
