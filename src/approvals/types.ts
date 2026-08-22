@@ -1,5 +1,4 @@
 
-
 export type ApprovalStatus = "pending" | "approved" | "rejected";
 export function normaliseStatus(status: string): ApprovalStatus {
   return (status?.toLowerCase() ?? 'pending') as ApprovalStatus;

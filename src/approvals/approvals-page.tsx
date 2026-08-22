@@ -6,7 +6,7 @@ import { ApprovalsSidebar } from './components/approvals-sidebar';
 import { DetailPanel } from './components/detail-panel';
 import { EmptyState } from './components/empty-state';
 import type { SchoolApplication } from './types';
-import { SchoolSidebar } from '@/page/school/dashboard/layout/school-side-bar';
+
 import { schoolService } from '@/services/school';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
@@ -137,7 +137,7 @@ export default function ApprovalsPage() {
       setApplications(prev =>
         prev?.map(a =>
           a.id === id
-            ? { ...a, status: 'approved', approvedAt: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) }
+            ? { ...a, status: 'approved', respondedAt : new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) }
             : a
         )
       );
@@ -189,7 +189,6 @@ export default function ApprovalsPage() {
 
   return (
     <div className="flex h-screen bg-[#EEEDF9] font-Poppins">
-      <SchoolSidebar />
       <div className="flex-1 flex flex-col h-screen bg-gray-50 overflow-hidden">
         <TopBar />
         {/* ── Main content ── */}

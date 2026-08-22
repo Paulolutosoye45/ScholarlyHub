@@ -4,7 +4,8 @@ import { X_Tenant_ID } from "./tenant";
 
 const endpoints = {
   createUser: "/api/PlatformAdmin/create",
-  login:"/api/PlatformAuth/login"
+  login: "/api/PlatformAuth/login",
+  users: "/api/PlatformAdmin/users",
 };
 
 interface IcreateUser {
@@ -17,8 +18,8 @@ interface IcreateUser {
 }
 
 interface ILogin {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
 
 export const platformAdmins = {
@@ -31,11 +32,18 @@ export const platformAdmins = {
   },
 
   Login: (data: ILogin) => {
-      
-     return API.post<TResponse<unknown>>(endpoints.login, data, {
+    return API.post<TResponse<unknown>>(endpoints.login, data, {
       headers: {
         "X-Tenant-ID": X_Tenant_ID,
       },
     });
-  }
+  },
+
+  platformAdminUser: () => {
+    return API.get<TResponse<unknown>>(endpoints.users, {
+      headers: {
+        "X-Tenant-ID": X_Tenant_ID,
+      },
+    });
+  },
 };

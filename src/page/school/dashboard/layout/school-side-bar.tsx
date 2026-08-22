@@ -13,7 +13,7 @@ import {
   Shield,
   Ticket,
   TrendingUp,
-  Users,
+  User,
 } from "lucide-react";
 
 
@@ -36,13 +36,13 @@ const approval = true; // ← flip to true when approved
 const OVERVIEW: NavItem[] = [
   { name: "Dashboard",  icons: <LayoutDashboard size={15} />, path: "/dashboard",         disabled: !approval },
   { name: "Analytics",  icons: <TrendingUp size={15} />,       path: "/analytics", disabled: false      },
-  // { name: "Status",     icons: <ShieldCheck size={15} />,       path: "/approval",  disabled: false     },
+  { name: "users",     icons: <User size={15} />,       path: "/platform-user",  disabled: false     },
 ];
 
 const SCHOOLS: NavItem[] = [
   { name: "All Schools",      icons: <Building2 size={15} />,  path: "/schools",        disabled: !approval },
   { name: "Register School",  icons: <PlusCircle size={15} />, path: "/register-school", disabled: !approval },
-  { name: "Approvals",   icons: <Users size={15} />,      path: "/school-approval",  disabled: !approval },
+  // { name: "Approvals",   icons: <Users size={15} />,      path: "/school-approval",  disabled: !approval },
 ];
 
 const BILLING: NavItem[] = [

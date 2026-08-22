@@ -2,7 +2,7 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { platformAdmins } from "@/services/platform"
 import { Eye, EyeOff, Loader2, AlertCircle, AtSign, Lock, ShieldCheck } from "lucide-react"
-import { Hashing } from "@/utils"
+// import { Hashing } from "@/utils"
 import { token, localData } from "@/utils"
 import { useNavigate } from "react-router-dom"
 
@@ -47,9 +47,9 @@ export function LoginForm({ onError }: { onError?: (error: string) => void } = {
   const onSubmit = async (data: { username: string; password: string }) => {
     setIsLoading(true)
     setErrorMsg(null)
-    const hashedPassword = await Hashing(data.password)
+    // const hashedPassword = await Hashing(data.password)
     try {
-      const res = await platformAdmins.Login({ ...data, password: hashedPassword })
+      const res = await platformAdmins.Login({ ...data, password: data.password })
       if (res.data.status === "failed") return setErrorMsg(res.data.responseMessage)
 
       const userData = res.data.data as { token: string; tokenExpiresIn: number; user: any }

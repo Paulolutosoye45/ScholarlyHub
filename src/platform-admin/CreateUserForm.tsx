@@ -1,7 +1,8 @@
-import * as React from "react"
 import { useForm } from "react-hook-form"
 import { platformAdmins } from "@/services/platform"
-import { Eye, EyeOff, Loader2, CheckCircle2, AlertCircle, User, Mail, Lock, Shield, AtSign } from "lucide-react"
+import { Eye, EyeOff, Loader2, CheckCircle2, AlertCircle, User, Mail, Lock, Shield, AtSign, Menu } from "lucide-react"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 interface FormData {
   firstName: string
@@ -12,16 +13,12 @@ interface FormData {
   role: string
 }
 
-interface CreateUserFormProps {
-  onSuccess?: () => void
-  onError?: (error: string) => void
-}
+
 
 const ROLES = [
-  { value: "admin",       label: "Admin"       },
-  { value: "super-admin", label: "Super Admin" },
-  { value: "teacher",     label: "Teacher"     },
-  { value: "staff",       label: "Staff"       },
+  { value: "PlatformAdmin", label: "Admin" },
+  { value: "PlatformSuperAdmin", label: "Super Admin" },
+  { value: "PlatformUser", label: "user" },
 ]
 
 function InputField({
@@ -48,10 +45,22 @@ function InputField({
   )
 }
 
-export function CreateUserForm({ onSuccess, onError }: CreateUserFormProps = {}) {
-  const [isLoading,    setIsLoading]    = React.useState(false)
-  const [showPassword, setShowPassword] = React.useState(false)
-  const [message,      setMessage]      = React.useState<{ text: string; ok: boolean } | null>(null)
+export function CreateUserForm() {
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    const sidebar = document.getElementById("panel-sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    if (!sidebar || !overlay) return;
+    const open = !sidebarOpen;
+    setSidebarOpen(open);
+    sidebar.classList.toggle("max-lg:-translate-x-full", !open);
+    overlay.classList.toggle("hidden", !open);
+  };
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ mode: "onBlur" })
 
@@ -59,35 +68,39 @@ export function CreateUserForm({ onSuccess, onError }: CreateUserFormProps = {})
     setIsLoading(true)
     setMessage(null)
     try {
-      const res =  await platformAdmins.createUser(data)
-      if(res.data.status === 'failed') return setMessage({text: res.data.responseMessage, ok:false})
+      const res = await platformAdmins.createUser(data)
+      if (res.data.status === 'failed') return setMessage({ text: res.data.responseMessage, ok: false })
       setMessage({ text: "User created successfully!", ok: true })
-      onSuccess?.()
+       navigate('/platform-user')
     } catch (err) {
       const msg =
         (err as any)?.response?.data?.message ||
         (err as any)?.message ||
         "Failed to create user"
       setMessage({ text: msg, ok: false })
-      onError?.(msg)
     } finally {
       setIsLoading(false)
     }
   }
 
+
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#EEEDF9] to-white flex items-center justify-center p-4">
+    <div className=" bg-gradient-to-br  from-[#EEEDF9] to-white flex items-center justify-center p-2 lg:p-4">
       <div className="w-full max-w-lg">
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-[0_4px_16px_0px_rgba(41,35,130,0.08),0_24px_64px_0px_rgba(41,35,130,0.06)] border border-gray-100 overflow-hidden">
+        <div className="bg-white lg:rounded-2xl shadow-[0_4px_16px_0px_rgba(41,35,130,0.08),0_24px_64px_0px_rgba(41,35,130,0.06)] border border-gray-100 overflow-hidden">
 
           {/* Header */}
-          <div className="bg-[#292382] px-7 py-6">
+          <div className="bg-[#292382] lg:px-7 px-4 py-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl hidden bg-white/10 lg:flex items-center justify-center">
                 <User className="w-5 h-5 text-white" />
               </div>
+              <button onClick={toggleSidebar} className="lg:hidden w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                <Menu size={16} />
+              </button>
               <div>
                 <h1 className="text-white font-bold text-[17px]">Create New User</h1>
                 <p className="text-white/60 text-[12px] mt-0.5">Fill in the details to add a user to the platform</p>
@@ -163,7 +176,7 @@ export function CreateUserForm({ onSuccess, onError }: CreateUserFormProps = {})
             <InputField label="Role" required error={errors.role?.message} icon={<Shield className="w-4 h-4" />}>
               <select
                 {...register("role", { required: "Please select a role" })}
-                className="w-full pl-9 pr-3.5 py-2.5 text-[13.5px] text-gray-900 bg-transparent outline-none rounded-xl appearance-none cursor-pointer"
+                className="w-full pl-9 pr-3.5 py-2.5 text-[13.5px] text-gray-900 bg-transparent outline-none rounded-xl appearance-none cursor-pointer bg-no-repeat bg-right-2.5 border-2 border-border rounded-md shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-[#292382]/10"
               >
                 <option value="">Select a role</option>
                 {ROLES.map(r => (

@@ -24,8 +24,8 @@ API.interceptors.response.use(
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("schoolInfo");
 
-      if (window.location.pathname !== "/auth") {
-        window.location.href = "/auth";
+      if (window.location.pathname !== "/platform-login") {
+        window.location.href = "/platform-login";
       }
     }
     return Promise.reject(error);

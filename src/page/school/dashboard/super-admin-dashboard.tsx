@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import AwaitingApproval from "../AwaitingApproval";
 import CompleteSchoolProfile from "../component/complete-school-profile";
-import { SchoolSidebar } from "./layout/school-side-bar";
 import { SchoolTopBar } from "./layout/school-top-bar";
 import { SchoolHeroBanner } from "./sections/school-hero-banner";
 import { SchoolLiveActivity } from "./sections/school-live-activity";
@@ -18,7 +17,6 @@ export default function SuperAdminDashboard() {
   const navigate = useNavigate()
   return (
     <div className="flex h-screen bg-[#EEEDF9] font-Poppins">
-      <SchoolSidebar />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {approval && profileComplete && (<SchoolTopBar title={approval ? "Dashboard" : "Awaiting Approval"} />)}
