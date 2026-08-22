@@ -141,7 +141,7 @@ export function LoginForm({ onError }: { onError?: (error: string) => void } = {
 
         {/* Footer note */}
         <p className="text-center text-[12px] text-gray-400 mt-5">
-          Platform administration portal · Access restricted
+          Platform administration portal · Access restrictedss
         </p>
       </div>
     </div>
