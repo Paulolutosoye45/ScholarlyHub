@@ -40,3 +40,4 @@ jobs:
           local_path: ./dist
           remote_path: /public_html
           password: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+          sftp_only: true
