@@ -12,6 +12,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -24,12 +32,12 @@ jobs:
         run: npm run build
 
       - name: Deploy to Hostinger via SFTP
-        uses: MIJNA/ssh-sftp-deploy-action@main
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
-          host: ${{ secrets.HOSTINGER_SFTP_HOST }}
           username: ${{ secrets.HOSTINGER_SFTP_USER }}
-          password: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+          server: ${{ secrets.HOSTINGER_SFTP_HOST }}
           port: 22
-          target: /public_html
-          strip_components: 1
-          remove_keys: always
+          local_path: ./dist
+          remote_path: /public_html
+          password: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+          sftp_only: true
